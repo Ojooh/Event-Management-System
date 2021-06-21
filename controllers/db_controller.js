@@ -1,19 +1,19 @@
 const { urlencoded } = require('body-parser');
 const mysql = require('mysql');
 
-const con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bp'
-});
-
 // const con = mysql.createConnection({
 //     host: 'localhost',
-//     user: 'yardstit_test',
-//     password: '~Patient123',
-//     database: 'yardstit_bp'
+//     user: 'root',
+//     password: '',
+//     database: 'bp'
 // });
+
+const con = mysql.createConnection({
+    host: 'localhost',
+    user: 'yardstit_test',
+    password: '~Patient123',
+    database: 'yardstit_bp'
+});
 
 
 con.connect(function (err) {
