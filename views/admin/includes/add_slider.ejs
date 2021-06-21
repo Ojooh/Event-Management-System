@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Sliders</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li class="active">Sliders</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> Add Slider
+                </h3>
+            </div>
+
+            <div class="panel-body">
+
+                <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    <div class="form-group col-12 my-1 error text-center text-danger w-100"></div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Slider Name</label>
+                        <div class="col-md-6">
+                            <input type="text" name="slider_name" id="slider_name" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Slider Txt1</label>
+                        <div class="col-md-6">
+                            <input type="text" name="slider_txt1" id="slider_txt1" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Slider Txt2</label>
+                        <div class="col-md-6">
+                            <input type="text" name="slider_txt2" id="slider_txt2" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Slider Image</label>
+                        <div class="col-md-6">
+                            <input type="file" class="form-control" name="slider_image" id="slider_image">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary form-control start">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(".start").on("click", function (e) {
+        console.log("okay");
+        e.preventDefault();
+        e.stopPropagation();
+
+        var s_name = $("#slider_name").val();
+        var s_txt1 = $("#slider_txt1").val();
+        var s_txt2 = $("#slider_txt2").val();
+        var s_image = $("#slider_image")[0].files[0];
+        var error = $(".error");
+        var msg = "";
+        var validImageTypes = ['image/jpeg', 'image/png',];
+        var nameRegex = /^[A-Za-z.\s_-]*$/;
+
+        if (s_name == "") {
+            msg = "Slider Name field is compulsory.";
+            $(".error").html(msg);
+        } else if (s_image == undefined || s_image == "" || validImageTypes.includes(s_image.type) == false) {
+            console.log("here")
+            msg = "Image Field Value not Valid and is compulsory.";
+            $(".error").html(msg);
+
+        } else {
+            console.log("gothere")
+            var fd = new FormData();
+            $(".error").html("");
+            var url = "/admin/add_slider";
+            fd.append("s_name", s_name);
+            fd.append("s_txt1", s_txt1);
+            fd.append("s_txt2", s_txt2);
+            fd.append("s_image", s_image);
+             fd.append("type", "add");
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: fd,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    Swal.fire({
+                        title: 'Auto close alert!',
+                        html: 'Please Hold on as details are uploaded, do not refresh.',
+                        timer: 40000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                    });
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+
+                        Swal.fire({
+                            icon: "success",
+                            title: data.success,
+                            text: "Click OK to proceed",
+                            confirmButtonText: `OK`,
+                            cancelButtonText: `Add`,
+                            allowOutsideClick: false,
+                        }).then(() => {
+                            location.replace("/admin/sliders");
+                        });
+                    } else if (data.url) {
+                        location.replace(data.url);
+                    } else {
+                        swal.close();
+                        fd = new FormData();
+                        error.html("");
+                        msg = "<span class='alert alert-success text-center'>" + data.error + "</span>";
+                        error.html(msg);
+                    }
+
+                }
+            });
+
+        }
+
+
+    });
+
+</script>

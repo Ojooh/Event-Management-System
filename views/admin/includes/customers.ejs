@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Customers</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li class="active">Customers</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> View Customers
+                </h3>
+            </div>
+
+
+
+
+            <div class="panel-body">
+            <% if (cuss !=undefined && cuss.length <=0 || cuss==undefined) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-danger text-center display-2">
+                            No Customers Available
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Customer Name</th>
+                                <th>Customer Email</th>
+                                <th>Customer Contact</th>
+                                <th>Customer Country</th>
+                                <th>Customer State</th>
+                                <th>I.P</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+
+
+
+
+                        <tbody>
+                        <% for (var i=0; i < cuss.length; i ++) { %>
+                            <tr>
+                                <td>
+                                    <%= i + 1 %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_f_name + ' '+ cuss[i].user_l_name %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_email %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_phone %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_country.split("-")[0] %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_state %>
+                                </td>
+                                <td>
+                                    <%= cuss[i].user_ip %>
+                                </td>
+
+                                <td>
+                                    <div class="btn-group">
+
+                                        <a href="/admin/edit_customer=<%= cuss[i].user_id %>"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
+                                        </a>
+                                        <button class="btn btn-danger btn-sm btn_delete_customer"
+                                            cust_id="<%= cuss[i].user_id %>"><i class="fa fa-times"></i>
+                                        </button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+
+                    </table>
+                </div>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

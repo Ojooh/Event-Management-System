@@ -1,0 +1,70 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Best Selling Categories</h3>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body" style="padding: 10px;">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="chart-responsive">
+                    <canvas id="pieChart" height="150"></canvas>
+                </div>
+                <!-- ./chart-responsive -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-5">
+                <ul class="chart-legend clearfix" style="list-style-type: none;">
+
+                    <% for (var i=0; i < 7 ; i++) { %>
+                        <li><i class="fa fa-circle-o text-<%= facts.color[i] %>"></i><%= facts.cat_name[i] %></li>
+                    <% } %>
+                </ul>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer no-padding">
+        <ul class="nav nav-pills nav-stacked">
+        <%  for (var i=0; i < 7 ; i++) { %>
+            <li>
+                <a href="#">
+                    <%= facts.cat_name[i] %>
+                    <span class="pull-right text-<%= facts.color[i] %>">
+                        <i class="fa fa-angle-right">
+                             <%= Math.ceil(facts.booked[i]*100/facts.totals[0]).toString() + "%" %>
+                        </i>
+                    </span>
+                </a>
+            </li>
+        <% } %>
+
+        </ul>
+    </div>
+    <!-- /.footer -->
+</div>
+<!-- /.box -->
+<script>
+    var l = "<%= facts.booked %>".split(",");
+    var j = "<%= facts.cat_name %>".split(",");
+    var c = "<%= facts.color %>".split(",");
+
+    var pie = [];
+    for (var i = 0; i < 7; i++) {
+        var ret = {};
+        ret["value"]    = l[i];
+        ret["color"]    = c[i];
+        ret["highlight"] =  c[i];
+        ret["label"]     = j[i];
+
+        pie.push(ret);
+     }
+     console.log(pie)
+</script>
+<script src="/js/pie.js"></script>
+
+
+
+

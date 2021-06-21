@@ -1,0 +1,189 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Categories</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li><a href="/admin/categories"><i class="fa fa-fw fa-bar-chart-o"></i> Ticket Categories </a></li>
+            <li class="active">Add Category</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> Add Category
+                </h3>
+            </div>
+
+            <div class="panel-body">
+
+                <form action="" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="cat_name" class="col-md-3 control-label">Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="cat_name" id="cat_name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_desc" class="col-md-3 control-label">Description</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="cat_desc" id="cat_desc" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_quantity" class="col-md-3 control-label">Quantity</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" name="cat_quantity" id="cat_quantity" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_price" class="col-md-3 control-label">Price</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="cat_price" id="cat_price" required>
+                                <span class="input-group-addon ">&#8358;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_booking_fee" class="col-md-3 control-label">Fee</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="cat_booking_fee" id="cat_booking_fee"
+                                    required>
+                                <span class="input-group-addon ">&#8358;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_image" class="col-md-3 control-label">Image</label>
+                        <div class="col-md-6">
+                            <input type="file" id="cat_image" class="form-control" name="cat_image" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary form-control start">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(".start").on("click", function (e) {
+        console.log("okay");
+        e.preventDefault();
+        e.stopPropagation();
+
+        var c_name = $("#cat_name").val();
+        var c_desc = $("#cat_desc").val();
+        var c_qty = $("#cat_quantity").val();
+        var c_price = $("#cat_price").val();
+        var c_fee = $("#cat_booking_fee").val();
+        var c_image = $("#cat_image")[0].files[0];
+        var error = $(".error");
+        var msg = "";
+        var validImageTypes = ['image/jpeg', 'image/png',];
+
+        if (c_name == "") {
+            msg = "Category Name field is compulsory.";
+            $(".error").html(msg);
+        } else if (c_desc == "") {
+            msg = "Category Description field is compulsory.";
+            $(".error").html(msg);
+        } else if (c_qty == "") {
+            msg = "Category Quantity field is compulsory.";
+            $(".error").html(msg);
+       } else if (c_qty <= 0 || isNaN(c_qty)) {
+            msg = "Category Quantity field Must be greater than 0";
+            $(".error").html(msg);
+        } else if (c_price == "") {
+            msg = "Category Price field is compulsory.";
+            $(".error").html(msg);
+        } else if (c_price <= 0 || isNaN(c_price)) {
+            msg = "Category Price field Must be greater than 0.";
+            $(".error").html(msg);
+        } else if (c_fee == "") {
+            msg = "Category Fee field is compulsory.";
+            $(".error").html(msg);
+        } else if (c_fee <= 0 || isNaN(c_fee)) {
+            msg = "Category Fee field Must be greater than 0.";
+            $(".error").html(msg);
+        }else if (c_image !== undefined && c_image != "" && validImageTypes.includes(c_image.type) == false) {
+            console.log("here")
+            msg = "Image Field Value not Valid.";
+            $(".error").html(msg);
+
+        } else {
+            console.log("gothere")
+            var fd = new FormData();
+            $(".error").html("");
+            var url = "/admin/add_category";
+            fd.append("c_name", c_name) ;
+            fd.append("c_desc", c_desc);
+            fd.append("c_qty", c_qty);
+            fd.append("c_price", c_price);
+            fd.append("c_fee", c_fee);
+            fd.append("c_image",  c_image);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: fd,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    Swal.fire({
+                        title: 'Auto close alert!',
+                        html: 'Please Hold on as details are uploaded, do not refresh.',
+                        timer: 40000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                    });
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+
+                        Swal.fire({
+                            icon: "success",
+                            title: data.success,
+                            text: "Click OK to proceed",
+                            confirmButtonText: `OK`,
+                            cancelButtonText: `Add`,
+                            allowOutsideClick: false,
+                        }).then(() => {
+                            location.replace("/admin/categories");
+                        });
+                    } else if (data.url) {
+                        location.replace(data.url);
+                    } else {
+                        swal.close();
+                        fd = new FormData();
+                        error.html("");
+                        msg = "<span class='alert alert-success text-center'>" + data.error + "</span>";
+                        error.html(msg);
+                    }
+
+                }
+            });
+
+        }
+
+
+    });
+
+</script>

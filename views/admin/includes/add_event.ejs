@@ -1,0 +1,192 @@
+<div class="row">
+<div class="col-lg-12 content-header">
+    <h1>Events</h1>
+    <ol class="breadcrumb">
+        <li><a href="index.php?dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+        <li><a href="/admin/events"><i class="fa fa-fw fa-calendar"></i> Events </a></li>
+        <li class="active">Add Event</li>
+    </ol>
+</div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> Create Event
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <form action="" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+
+                    <div class="form-group col-12 my-1 error text-center text-danger w-100"></div>
+
+                    <div class="form-group">
+                        <label for="event_name" class="col-md-3 control-label">Event Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="event_name" id="event_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event_extras" class="col-md-3 control-label">Event Extras</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="event_extras" id="event_extras" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event_venue" class="col-md-3 control-label">Event Venue</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="event_venue" id="event_venue" required>
+                        </div>
+                    </div>
+
+                    <!--date time picker-->
+                    <div class="form-group">
+                        <label for="id_1" class="col-md-3 control-label">Event Date</label>
+                        <div class="col-md-6">
+                            <div class="input-group date" id="id_1">
+                                <input type="text" class="form-control event_date" name="event_date" id="id_1" required>
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event_image" class="col-md-3 control-label">Event Image</label>
+                        <div class="col-md-6">
+                            <input type="file" class="form-control" name="event_image" id="event_image">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary form-control start">Submit</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function formatDate(date) {
+        var d = new Date(date);
+        var yy = d.getFullYear();
+        var mm = (parseInt(d.getMonth()) + 1).toString();
+        var dd = d.getDate();
+        var HH = d.getHours();
+        var MM = d.getMinutes()
+        var SS = d.getSeconds();
+        return yy + "-" + mm + "-" + dd + " " + HH + ":" + MM + ":" + SS;
+    }
+
+    $(".start").on("click", function (e) {
+        console.log("okay");
+        e.preventDefault();
+        e.stopPropagation();
+
+        var e_name = $("#event_name").val();
+        var e_extra = $("#event_extras").val();
+        var e_venue = $("#event_venue").val();
+        var e_date = $(".event_date").val();
+        var e_image = $("#event_image")[0].files[0];
+        var f = new Date(e_date);
+        var t = new Date();
+        var error = $(".error");
+        var msg = "";
+        var validImageTypes = ['image/jpeg', 'image/png',];
+
+        if (e_name == "") {
+            msg = "Event Name field is compulsory.";
+            $(".error").html(msg);
+        } else if (e_venue == "") {
+            msg = "Event Venue field is compulsory.";
+            $(".error").html(msg);
+        } else if (e_date == "") {
+            msg = "Event Date field is compulsory.";
+            $(".error").html(msg);
+        } else if (t > f) {
+            msg = "Date Field value is in the past.";
+            $(".error").html(msg);
+        } else if (e_image !== undefined && e_image != "" && validImageTypes.includes(e_image.type) == false) {
+                console.log("here")
+                msg = "Image Field Value not Valid.";
+                $(".error").html(msg);
+            
+        } else {
+            console.log("gothere")
+            var fd = new FormData();
+            $(".error").html("");
+            var url = "/admin/add_event";
+            e_date = formatDate(e_date);
+            console.log(e_date);
+            fd.append("e_name", e_name);
+            fd.append("e_extra", e_extra);
+            fd.append("e_venue", e_venue);
+            fd.append("e_date", e_date);
+            fd.append("e_image", e_image);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: fd,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    Swal.fire({
+                        title: 'Auto close alert!',
+                        html: 'Please Hold on as details are uploaded, do not refresh.',
+                        timer: 40000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                    });
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+
+                        Swal.fire({
+                            icon: "success",
+                            title: data.success,
+                            text: "Click OK to proceed",
+                            confirmButtonText: `OK`,
+                            cancelButtonText: `Add`,
+                            allowOutsideClick: false,
+                        }).then(() => {
+                            location.replace("/admin/events");
+                        });
+                    } else if (data.url) {
+                        location.replace(data.url);
+                    } else {
+                        swal.close();
+                        fd = new FormData();
+                        error.html("");
+                        msg = "<span class='alert alert-success text-center'>" + data.error + "</span>";
+                        error.html(msg);
+                    }
+
+                }
+            });
+
+        }
+
+
+    });
+
+</script>

@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Events</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li class="active">Ticket Categories</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> View Ticket Categories
+                </h3>
+            </div>
+
+            <div class="panel-body">
+            <% if (cats !=undefined && cats.length <=0 || cats == undefined) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-danger text-center display-2">
+                            No Categories Available
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        <% for (var i=0; i < cats.length; i ++) { %>
+                            <tr>
+                                <td>
+                                    <%= i + 1 %>
+                                </td>
+                                <td>
+                                <% if (cats[i].cat_image && cats[i].cat_image != "") { %>
+                                    <img src="/images/cat_files/<%=  cats[i].cat_image %>" width="150px" height="80px"
+                                        class="img-rounded">
+                                <%}  else { %>
+                                    No Image Set
+                                <% } %>
+                                </td>
+                                <td>
+                                    <%=  cats[i].cat_name %>
+                                </td>
+                                <td>
+                                    <%=  cats[i].cat_desc %>
+                                </td>
+                                <td>
+                                    <%=  cats[i].cat_quantity %>
+                                </td>
+                                <td class="pretty-currency">
+                                    <%=  cats[i].cat_price %>
+                                </td>
+
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="/admin/edit_category=<%=  cats[i].cat_id %>"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
+                                        </a>
+                                        <button class="btn btn-danger btn-sm btn_delete_category"
+                                            cat_id="<%=  cats[i].cat_id %>"><i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+                        <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var currency = $(".pretty-currency");
+
+    function prettyCurrency(amount) {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            minimumFractionDigits: 2
+        });
+
+        return formatter.format(amount)
+    }
+
+    for (var t = 0; t < currency.length; t++) {
+            var cur = prettyCurrency($(currency[t]).html().trim());
+            $(currency[t]).html(cur);
+        }
+</script>

@@ -1,0 +1,48 @@
+<% include includes/head %>
+<div id="wrapper">
+    <!-- wrapper starts -->
+    <% include includes/navigations %>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <% if (isset == "dashboard" ) { %>
+                <% include includes/dashboard %>
+            <% } else if (isset == "events" ) { %>
+                <% include includes/view_events %>
+            <% } else if (isset == "edit_events" ) { %>
+                <% include includes/edit_events %>
+            <% } else if (isset == "add_event" ) { %>
+                <% include includes/add_event %>
+            <%} else if (isset == "add_category" ) { %>
+                <% include includes/add_category %>
+            <% } else if (isset == "categories" ) { %>
+                <% include includes/categories %>
+            <% } else if (isset == "edit_category" ) { %>
+                <% include includes/edit_category %>
+            <% } else if (isset == "customers" ) { %>
+                <% include includes/customers %>
+            <% } else if (isset == "edit_customer" ) { %>
+                <% include includes/edit_customer %>
+            <%  } else if (isset == "orders" ) { %>
+                <% include includes/orders %>
+            <% } else if (isset == "payments" ) { %>
+                <% include includes/payments %>
+            <% } else if (isset == "add_user" ) { %>
+                <% include includes/add_user %>
+            <% } else if (isset == "admins" ) { %>
+                <% include includes/admins %>
+            <%} else if (isset == "edit_user" ) { %>
+                <% include includes/edit_user %>
+            <%} else if (isset == "add_slider" ) { %>
+                <% include includes/add_slider %>
+            <% } else if (isset == "sliders" ) { %>
+                <% include includes/sliders %>
+            <%} else if (isset == "edit_slider" ) { %>
+                <% include includes/edit_slider %>
+            <% } %>
+            
+
+        </div>
+    </div>
+</div> <!-- Wrapper ends -->
+        
+<% include includes/footer %>

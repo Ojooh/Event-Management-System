@@ -1,0 +1,20 @@
+<% include includes/head %>
+    <div class="container">
+        <form class="form-login" action="" method="post">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <h2 class="form-login-heading">Admin Login</h2>
+                </div>
+                <div class="form-group col-12 my-1 error text-center text-danger w-100"></div>
+                <div class="form-group col-12">
+                    <input type="email" class="form-control" id="admin_email" placeholder="Email" required>
+                </div>
+                <div class="form-group col-12">
+                    <input type="password" class="form-control" id="admin_pass" placeholder="Password" required>
+                </div>
+                <div class="form-group col-12">
+                    <button class="btn btn-lg btn-primary btn-block loginBtn" type="button" name="admin_login">Login</button>
+                </div>   
+        </form>
+    </div>
+<% include includes/foot %>

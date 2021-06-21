@@ -1,0 +1,96 @@
+<section id="pricing" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title-header text-center">
+                    <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Our Pricing</h1>
+                    <p class="wow fadeInDown" data-wow-delay="0.2s">Black Pearl Event on Digital Design</p>
+                </div>
+            </div>
+        </div>
+        <% if(prcs && prcs.length > 0) { %>
+        <div class="row">
+            <% for (var i=0; i < prcs.length; i++) { %>
+                <div class="col-lg-4 col-sm-6 col-xa-12 mb-3">
+                    <div class="price-block-wrapper wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="icon">
+                            <i class="lni-write"></i>
+                        </div>
+                        <div class="colmun-title">
+                            <h5>
+                                <%= prcs[i].cat_name %>
+                            </h5>
+                        </div>
+                        <div class="price">
+                            <h2 class="pretty-currency">&#8358; <%= prcs[i].cat_price %>
+                            </h2>
+                            <p>
+                                <%= prcs[i].cat_quantity %> Tickets Available
+                            </p>
+                        </div>
+                        <div class="pricing-list">
+                            <ul>
+                                <% var jist=prcs[i].cat_desc.split(','); if (jist.length> 0) {
+                                    for (var t = 0; t < jist.length; t++) { %>
+                                        <li><i class="lni-check-mark-circle"></i><span class="text">
+                                                <%= jist[i] %>
+                                            </span></li>
+                                        <!-- <li><i class="lni-check-mark-circle"></i><span class="text">Coffee Break</span></li>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Lunch on all days</span></li>
+                                    <li><i class="lni-close"></i><span class="text">Access to all areas</span></li>
+                                    <li><i class="lni-close"></i><span class="text">Certificate</span></li>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Workshop</span></li> -->
+        
+                                <% } } else { %>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Entrance</span></li>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Coffee Break</span></li>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Lunch on all days</span>
+                                    </li>
+                                    <li><i class="lni-close"></i><span class="text">Access to all areas</span></li>
+                                    <li><i class="lni-check-mark-circle"></i><span class="text">Certificate</span></li>
+                                    <li><i class="lni-close"></i><span class="text">Workshop</span></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-common">Buy Ticket</a>
+                    </div>
+                </div>
+                <% } %>
+        
+        </div>
+        
+        <% } else { %>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xa-12 mb-3">
+                <div class="price-block-wrapper wow fadeInLeft" data-wow-delay="0.2s">
+                    <div class="display-4 text-danger text-center">
+                        No Ticket Prices have been set
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</section>
+<script>
+    var currency = $(".pretty-currency");
+
+        function prettyCurrency(amount) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: '&#8358;',
+                minimumFractionDigits: 2
+            });
+
+            return formatter.format(amount)
+        }
+
+        function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        for (var t = 0; t < currency.length; t++) {
+            var cur = numberWithCommas($(currency[t]).html().trim());
+            $(currency[t]).html(cur);
+        }
+</script>

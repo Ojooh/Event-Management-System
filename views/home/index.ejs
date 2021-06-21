@@ -1,0 +1,40 @@
+<% include includes/head %>
+        <header id="header-wrap">
+            <% include includes/navigation %>
+            
+            <% if (slds && slds.length > 0) { %>
+                <% include includes/slider %>
+            <% } %>
+        
+        </header>
+            <% include includes/event_start %>
+            <% include includes/services %>
+            <% include includes/about %>
+            <% include includes/event_near %>
+            <% include includes/schedules %>
+        <% if( type && type == 'all') { %>
+            <% include includes/all_events %>
+        <% } else { %>
+            <% include includes/events %>
+        <% } %>
+            <% include includes/faq %>
+            <% include includes/sponsors %>
+            <% include includes/categories %>
+            <% include includes/guideline %>
+            <% include includes/newsletter %>
+            <% include includes/contact %>
+            
+
+        
+
+
+
+<% include includes/footer %>
+<% if( type && type=='all' ) { %>
+    <script>
+        jQuery(document).ready(function ($) {
+            var url = window.location.href;
+            location.replace(url + "#gallery");
+        });
+    </script>
+<% }  %>

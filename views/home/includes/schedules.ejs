@@ -1,0 +1,491 @@
+<section id="schedules" class="schedule section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title-header text-center">
+                    <h1 class="section-title wow fadeInUp" data-wow-delay="0.2s">Event Schedules</h1>
+                    <p class="wow fadeInDown" data-wow-delay="0.2s">Lorem ipsum dolor sit amet, consectetur adipiscing
+                        <br> elit, sed do eiusmod tempor</p>
+                </div>
+            </div>
+        </div>
+        <div class="schedule-area row wow fadeInDown" data-wow-delay="0.3s">
+            <div class="schedule-tab-title col-md-3 col-lg-3 col-xs-12">
+                <div class="table-responsive">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="sunday-tab" data-toggle="tab" href="#sunday" role="tab" aria-controls="sunday">
+                                <div class="item-text">
+                                    <h4>Sunday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="monday-tab" data-toggle="tab" href="#monday" role="tab"
+                                aria-controls="monday" aria-expanded="true">
+                                <div class="item-text">
+                                    <h4>Monday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="tuesday-tab" data-toggle="tab" href="#tuesday" role="tab"
+                                aria-controls="tuesday">
+                                <div class="item-text">
+                                    <h4>Tuesday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="wednesday-tab" data-toggle="tab" href="#wednesday" role="tab"
+                                aria-controls="wednesday">
+                                <div class="item-text">
+                                    <h4>Wednesday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="thursday-tab" data-toggle="tab" href="#thursday" role="tab"
+                                aria-controls="thursday">
+                                <div class="item-text">
+                                    <h4>Thursday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="friday-tab" data-toggle="tab" href="#friday" role="tab" aria-controls="friday">
+                                <div class="item-text">
+                                    <h4>Friday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wk" id="saturday-tab" data-toggle="tab" href="#saturday" role="tab" aria-controls="saturday">
+                                <div class="item-text">
+                                    <h4>Saturday</h4>
+                                    <h5 class="week-date"></h5>
+                                </div>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="schedule-tab-content col-md-9 col-lg-9 col-xs-12 clearfix">
+                <div class="tab-content" id="myTabContent">
+                <% if (week && week.length > 0) { %>
+                    <div class="tab-pane fade" id="sunday" role="tabpanel" aria-labelledby="sunday-tab">
+                        <div id="accordion">
+                        <% for (var i = 0; i < week.length; i++) { %>
+                            <div class="card">
+                            <% 
+                                    var m = new Date(week[i].event_date); 
+                                    if (m.getDay() == 0) {
+                            %>
+                                <div id="heading<%= i + 1; %>">
+                                    <div class="collapsed card-header" data-toggle="collapse" data-target="#collapse<%= i + 1; %>" aria-expanded="false"
+                                        aria-controls="collapse<%= i + 1; %>">
+                                        <div class="images-box">
+                                            <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                        </div>
+                                        <span class="time pretty-daten"><%= week[i].event_date %></span>
+                                        <h4><%= week[i].event_name %></h4>
+                                        <!-- <h5 class="name">David Warner</h5> -->
+                                    </div>
+                                </div>
+                                <div id="collapse<%= i + 1; %>" class="collapse" aria-labelledby="heading<%= i + 1; %>" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p>
+                                            <%= week[i].event_extras %>
+                                        </p>
+                                        <div class="location">
+                                            <span>Location:</span> <%= week[i].event_venue %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card p-5">
+                                                <div class="display-4 text-danger text-center">
+                                                    No Events Avialable on Sunday
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                            </div>
+                        <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="monday" role="tabpanel" aria-labelledby="monday-tab">
+                        <div id="accordion2">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()==1) { %>
+                                        <div id="headingone<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse" data-target="#collapseone<%= i + 1; %>"
+                                                aria-expanded="false" aria-controls="collapseone<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapseone<%= i + 1; %>" class="collapse" aria-labelledby="headingone<%= i + 1; %>"
+                                            data-parent="#accordion2">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% } else { %>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card p-5">
+                                                    <div class="display-4 text-danger text-center">
+                                                        No Events Avialable on Monday
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tuesday" role="tabpanel" aria-labelledby="tuesday-tab">
+                        <div id="accordion3">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()== 2) { %>
+                                        <div id="headingtwo<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse" data-target="#collapsetwo<%= i + 1; %>"
+                                                aria-expanded="false" aria-controls="collapsetwo<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapsetwo<%= i + 1; %>" class="collapse" aria-labelledby="headingtwo<%= i + 1; %>"
+                                            data-parent="#accordion3">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card p-5">
+                                                            <div class="display-4 text-danger text-center">
+                                                                No Events Avialable on Tuesday
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
+                        <div id="accordion4">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()==3) { %>
+                                        <div id="headingthree<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse" data-target="#collapsethree<%= i + 1; %>"
+                                                aria-expanded="false" aria-controls="collapsethree<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapsethree<%= i + 1; %>" class="collapse" aria-labelledby="headingthree<%= i + 1; %>"
+                                            data-parent="#accordion4">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card p-5">
+                                                            <div class="display-4 text-danger text-center">
+                                                                No Events Avialable on wednesday
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="thursday" role="tabpanel" aria-labelledby="thursday-tab">
+                        <div id="accordion5">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()==4) { %>
+                                        <div id="headingfour<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse" data-target="#collapsefour<%= i + 1; %>"
+                                                aria-expanded="false" aria-controls="collapsefour<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapsefour<%= i + 1; %>" class="collapse" aria-labelledby="headingfour<%= i + 1; %>"
+                                            data-parent="#accordion5">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card p-5">
+                                                            <div class="display-4 text-danger text-center">
+                                                                No Events Avialable on Thursday
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="friday" role="tabpanel" aria-labelledby="friday-tab">
+                        <div id="accordion6">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()==5) { %>
+                                        <div id="headingfive<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse" data-target="#collapsefive<%= i + 1; %>"
+                                                aria-expanded="false" aria-controls="collapsefive<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapsefive<%= i + 1; %>" class="collapse" aria-labelledby="headingfive<%= i + 1; %>"
+                                            data-parent="#accordion6">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card p-5">
+                                                            <div class="display-4 text-danger text-center">
+                                                                No Events Avialable on Friday
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="saturday" role="tabpanel" aria-labelledby="saturday-tab">
+                        <div id="accordion7">
+                            <% for (var i=0; i < week.length; i++) { %>
+                                <div class="card">
+                                    <% var m=new Date(week[i].event_date); if (m.getDay()==6) { %>
+                                        <div id="headingsix<%= i + 1; %>">
+                                            <div class="collapsed card-header" data-toggle="collapse"
+                                                data-target="#collapsesix<%= i + 1; %>" aria-expanded="false"
+                                                aria-controls="collapsesix<%= i + 1; %>">
+                                                <div class="images-box">
+                                                    <img class="img-fluid" src="/images/event_files/<%= week[i].event_image %>" alt="">
+                                                </div>
+                                                <span class="time pretty-daten">
+                                                    <%= week[i].event_date %>
+                                                </span>
+                                                <h4>
+                                                    <%= week[i].event_name %>
+                                                </h4>
+                                                <!-- <h5 class="name">David Warner</h5> -->
+                                            </div>
+                                        </div>
+                                        <div id="collapsesix<%= i + 1; %>" class="collapse" aria-labelledby="headingsix<%= i + 1; %>"
+                                            data-parent="#accordion7">
+                                            <div class="card-body">
+                                                <p>
+                                                    <%= week[i].event_extras %>
+                                                </p>
+                                                <div class="location">
+                                                    <span>Location:</span>
+                                                    <%= week[i].event_venue %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card p-5">
+                                                            <div class="display-4 text-danger text-center">
+                                                                No Events Avialable on Saturday
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card p-5">
+                                    <div class="display-4 text-danger text-center">
+                                        No Events Avialable this week
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    var output = $(".week-date");
+    const monthly = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var t = new Date();
+    var t_d = t.getDate()
+    var day1 = new Date(t.setDate(t.getDate() - t.getDay()));
+    var mm = monthly[day1.getMonth()];
+    var n = day1.getDate();
+    var dt = $(".pretty-daten");
+
+    for (var t = 0; t < output.length; t++) { 
+        if (n == t_d) {
+            $($(".wk")[t]).addClass("active");
+            var id = $($(".wk")[t]).attr("id").split("-");
+            $("#" + id[0]).addClass("show active");
+        }
+        var daset = n.toString() + " " + mm;
+        $(output[t]).html(daset);
+        n++;
+    }
+    
+        // const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        // const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
+    function prettyDate(date) {
+        if (date != "0000-00-00 00:00:00") {
+            var d = new Date(date);
+            var day = d.getDate();
+            var dayName = days[d.getDay()];
+            var month = monthNames[d.getMonth()];
+            var year = d.getFullYear();
+            var h = d.getHours()
+            var m = d.getMinutes();
+            var _time = (h > 12) ? (h - 12 + ':' + m + ' PM') : (h + ':' + m + ' AM');
+            var result = dayName + " " + day + " " + month + ", " + year + " " + _time;
+            return result
+        } else {
+            return "Never";
+        }
+    }
+
+
+        for (var t = 0; t < dt.length; t++) {
+            var cur = prettyDate($(dt[t]).html().trim());
+            $(dt[t]).html(cur);
+        }
+</script>

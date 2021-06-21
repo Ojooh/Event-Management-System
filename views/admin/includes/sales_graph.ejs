@@ -1,0 +1,66 @@
+
+
+<div class="box  bg-teal-gradient">
+    <div class="box-header">
+
+        <i class="fa fa-th"></i>
+        <h3 class="box-title">Sales Graph</h3>
+        <div class="chart" id="line-chart" style="height: 300px"></div>
+
+    </div>
+</div>
+
+
+<script>
+    var nrps = "<%= nrp %>";
+    var ops = "<%= op %>";
+    const regex = /&#34;/gi;
+    nrps = nrps.replace(regex, '"');
+    ops = ops.replace(regex, '"');
+    nrp = JSON.parse(nrps);
+    ops = JSON.parse(ops);
+    console.log(nrp[0]);
+    console.log(ops[0]);
+    var f = [];
+    var c = {};
+    var j, m;
+
+    if (nrp != undefined && nrp != "") {
+        nrp.forEach(function(item, index){
+            for (var i in item) {
+                var k = i;
+                var v = item[i];
+                j = k; m = v;
+
+            }
+            c["y"] = k;
+            c["Sales"] = ops[0][v];
+            console.log(c);
+        });
+        c["y"] = j;
+        c["Sales"] = ops[0][m];
+        f.push(c);
+
+    }
+
+    var line = new Morris.Line({
+        element: 'line-chart',
+        resize: true,
+        data: f,
+        xkey: 'y',
+        ykeys            : ['Sales'],
+        labels           : ['Sales'],
+        lineColors       : ['#efefef'],
+        lineWidth        : 2,
+        hideHover        : 'auto',
+        gridTextColor    : '#fff',
+        gridStrokeWidth  : 0.4,
+        pointSize        : 4,
+        pointStrokeColors: ['#efefef'],
+        gridLineColor    : '#efefef',
+        gridTextFamily   : 'Open Sans',
+        preUnits         : 'NGN ',
+        gridTextSize     : 14
+  });
+
+</script>

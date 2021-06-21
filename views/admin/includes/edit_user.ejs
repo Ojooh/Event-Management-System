@@ -1,0 +1,239 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Users</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li><a href="/admin/users"><i class="fa fa-fw fa-users"></i> Admin Users </a></li>
+            <li class="active"> Edit User</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> Update User
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <form action="" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
+
+                    <center>
+                        <div class="col-md-6-offset-3">
+                        <% if (usr.user_image && usr.user_image != "") { %>
+                            <img src="/images/user_files/<%= usr.user_image %>" alt=""
+                                class="img-responsive img-circle" width="150" height="150"
+                                style="border: 1px solid grey;">
+                        <% } else { %>
+                            <img src="/images/avatars/4.png" alt="" class="img-responsive img-circle"
+                                width="150" height="150" style="border: 1px solid grey;">
+                        <% } %>
+                        </div>
+                        <center><br>
+
+                        <div class="form-group col-12 my-1 error text-center text-danger w-100"></div>
+                        
+                        <div class="form-group">
+                            <label for="user_name" class="col-md-3 control-label">Username</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="user_name" id="user_name" required
+                                    value="<%= (usr.user_name) ? usr.user_name : '' %>" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_f_name" class="col-md-3 control-label">First Name</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="user_f_name" id="user_f_name" required
+                                    value="<%= (usr.user_f_name) ? usr.user_f_name : '' %>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_l_name" class="col-md-3 control-label">Last Name</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="user_l_name" id="user_l_name" required
+                                    value="<%= (usr.user_l_name) ? usr.user_l_name : '' %>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_email" class="col-md-3 control-label">Email</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="user_email" id="user_email" required
+                                    value="<%= (usr.user_email) ? usr.user_email : '' %>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_contact" class="col-md-3 control-label">User Type</label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="user_type" id="user_type" required>
+                                    <option value="">Select User Type</option>
+                                    <option value="ADMS">Super Admin</option>
+                                    <option value="ADM">Editor Admin</option>
+                                    <option value="CUS" disabled>Customer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_pass" class="col-md-3 control-label">Passowrd</label>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" name="user_pass" id="user_pass" required
+                                    value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_phone" class="col-md-3 control-label">Contact</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="user_phone" id="user_phone" required
+                                    value="<%= (usr.user_phone) ? usr.user_phone : '' %>">
+                            </div>
+                        </div>
+
+                            <div class="form-group">
+                                <label for="user_image" class="col-md-3 control-label"></label>
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" name="user_image" id="user_image" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-primary form-control send" data-id="<%= usr.user_id %>">Update</button>
+                                </div>
+                            </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $("#user_type").val("<%= usr.user_type; %>");
+    });
+    $(".send").on("click", function (e) {
+            console.log("okay");
+            e.preventDefault();
+            e.stopPropagation();
+
+            var U_fname = $("#user_f_name").val();
+            var U_lname = $("#user_l_name").val();
+            var U_email = $("#user_email").val();
+            var U_pass = $("#user_pass").val();
+            var U_contact = parseInt($("#user_phone").val());
+            var U_type = $("#user_type").val();
+            var U_image = $("#user_image")[0].files[0];
+            var error = $(".error");
+            var msg = "";
+            var validImageTypes = ['image/jpeg', 'image/png',];
+            var nameRegex = /^[A-Za-z.\s_-]*$/;
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            var passRegex = /^([a-z0-9]).{6,}$/;
+            var ID = $(this).attr("data-id");
+
+            if (U_fname == "") {
+                msg = "User First Name field is compulsory.";
+                $(".error").html(msg);
+            } else if (U_lname == "") {
+                msg = "User Last Name field is compulsory.";
+                $(".error").html(msg);
+            } else if (U_email == "") {
+                msg = "User email field is compulsory.";
+                $(".error").html(msg);
+            } else if (nameRegex.test(U_fname) == false) {
+                msg = "User First Name Input is Invalid only character and Whitespace Allowed.";
+                $(".error").html(msg);
+            } else if (nameRegex.test(U_lname) == false) {
+                msg = "User Last Name Input is Invalid only character and Whitespace Allowed.";
+                $(".error").html(msg);
+            } else if (emailRegex.test(U_email) == false) {
+                msg = "User Email Input is Invalid.";
+                $(".error").html(msg);
+            } else if (U_pass != "" && passRegex.test(U_pass) == false) {
+                msg = "User Password Input is Invalid only must be more than 6 characters.";
+                $(".error").html(msg);
+            } else if (U_contact != "" && isNaN(U_contact)) {
+                msg = "User Contact Field must be number.";
+                $(".error").html(msg);
+            } else if ((U_image !== undefined && U_image != "" && validImageTypes.includes(U_image.type) == false)) {
+                console.log("here")
+                msg = "Image Field Value not Valid.";
+                $(".error").html(msg);
+
+            } else {
+                console.log("gothere")
+                var fd = new FormData();
+                $(".error").html("");
+                var url = "/admin/edit_user=" + ID;
+                fd.append("U_fname", U_fname);
+                fd.append("U_lname", U_lname);
+                fd.append("U_email", U_email);
+                fd.append("U_pass", U_pass);
+                fd.append("U_contact", U_contact);
+                fd.append("U_type", U_type);
+                fd.append("U_image", U_image);
+                fd.append("type", "edit");
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: 'Auto close alert!',
+                            html: 'Please Hold on as details are uploaded, do not refresh.',
+                            timer: 40000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                        });
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.success) {
+
+                            Swal.fire({
+                                icon: "success",
+                                title: data.success,
+                                text: "Click OK to proceed",
+                                confirmButtonText: `OK`,
+                                cancelButtonText: `Add`,
+                                allowOutsideClick: false,
+                            }).then(() => {
+                                location.replace("/admin/users");
+                            });
+                        } else if (data.url) {
+                            location.replace(data.url);
+                        } else {
+                            swal.close();
+                            fd = new FormData();
+                            error.html("");
+                            msg = "<span class='alert alert-success text-center'>" + data.error + "</span>";
+                            error.html(msg);
+                        }
+
+                    }
+                });
+
+            }
+
+
+        });
+
+</script>

@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-lg-12 content-header">
+        <h1>Orders</h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
+            <li class="active">Orders</li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-money"></i> View Orders
+                </h3>
+            </div>
+
+            <div class="panel-body">
+            <% if (ords !=undefined && ords.length <=0 || ords==undefined) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-danger text-center display-2">
+                            No Customers Available
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Order No</th>
+                                <th>Event</th>
+                                <th>Category</th>
+                                <th>Booked Seats</th>
+                                <th>Amount</th>
+                                <th>Order Date</th>
+                                <th>Order Status</th>
+                                <th>Customer email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        <% for (var i=0; i < ords.length; i ++) { %>
+                            <tr>
+                                <td>
+                                    <%= i + 1; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].order_no; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].event_name; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].cat_name; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].booked_seats; %>
+                                </td>
+                                <td class="pretty-currency">
+                                    <%= ords[i].amount; %>
+                                </td>
+                                <td class="pretty-date">
+                                    <%= ords[i].order_date; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].status; %>
+                                </td>
+                                <td>
+                                    <%= ords[i].user_email; %>
+                                </td>
+
+                                <td>
+                                    <div class="btn-group">
+
+                                        <!-- <a href="index.php?edit_order=<?php //echo $order_id;%>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>
+                                    </a> -->
+                                        <button class="btn btn-info btn-sm btn_print_bill"
+                                            order="<%= ords[i].order_no; %>"><i class="fa fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm btn_delete_order"
+                                            order_id="<%= ords[i].id; %>"><i class="fa fa-times"></i>
+                                        </button>
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <% } %>
+                        </tbody>
+
+                    </table>
+                </div>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var currency = $(".pretty-currency");
+    var dt = $(".pretty-date");
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
+    function prettyCurrency(amount) {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            minimumFractionDigits: 2
+        });
+
+        return formatter.format(amount)
+    }
+
+    function prettyDate(date) {
+            if (date != "0000-00-00 00:00:00") {
+                var d = new Date(date);
+                var day = d.getDate();
+                var dayName = days[d.getDay()];
+                var month = monthNames[d.getMonth()];
+                var year = d.getFullYear();
+                var h = d.getHours()
+                var m = d.getMinutes();
+                var _time = (h > 12) ? (h - 12 + ':' + m + ' PM') : (h + ':' + m + ' AM');
+                var result = dayName + " " + day + " " + month + ", " + year + " " + _time;
+                return result
+            } else {
+                return "Never";
+            }
+        }
+
+    for (var t = 0; t < currency.length; t++) {
+        var cur = prettyCurrency($(currency[t]).html().trim());
+        $(currency[t]).html(cur);
+    }
+
+    for (var t = 0; t < dt.length; t++) {
+            var cur = prettyDate($(dt[t]).html().trim());
+            $(dt[t]).html(cur);
+        }
+</script>
