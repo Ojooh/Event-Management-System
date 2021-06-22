@@ -5,6 +5,8 @@ var indexHandler = require('../controllers/index_controller');
 /* GET home page. */
 router.get('/', indexHandler.getHomePage);
 
+router.get('/bp', indexHandler.getHomePage);
+
 router.get('/all_events', indexHandler.getALLevents);
 
 module.exports = router;
