@@ -8,7 +8,6 @@ router.get('/', indexHandler.getHomePage);
 router.get('/bp', indexHandler.getHomePage);
 
 
-
 router.get('/all_events', indexHandler.getALLevents);
 
 module.exports = router;
